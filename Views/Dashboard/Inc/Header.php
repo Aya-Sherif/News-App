@@ -98,8 +98,8 @@
             <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=".$user_id ?>">View All</a></li>
             <?php else:?>
             <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=".$user_id ?>">View All</a></li>
+            <?php endif;?>
           </ul>
-          <?php endif;?>
 
         </li>
       </ul>
