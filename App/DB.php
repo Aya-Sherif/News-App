@@ -92,12 +92,29 @@ function dbRow($table, $field, $value)
     $sql = "SELECT * FROM `$table` WHERE `$field`='$value' ";
     try {
         $result = mysqli_query($conn, $sql);
-
         $data = mysqli_fetch_assoc($result);
         if ($data) {
             return $data;
         } else {
-            return false;
+            return [];
+        }
+    } catch (mysqli_sql_exception $e) {
+        die("insert error : " . $e->getMessage());
+    }
+}
+function dbRows($table, $field, $value)
+{
+    global $conn;
+    $sql = "SELECT * FROM `$table` WHERE `$field`='$value' ";
+    try {
+        $result = mysqli_query($conn, $sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }        if ($data) {
+            return $data;
+        } else {
+            return [];
         }
     } catch (mysqli_sql_exception $e) {
         die("insert error : " . $e->getMessage());

@@ -1,7 +1,7 @@
-<?php require_once '../../../App/config.php'; ?>
-
+<?php 
+require_once '../../../App/config.php'; 
+?>
 <?php require_once MAIN_PATH . '/Views/Dashboard/Inc/Header.php';
-//var_dump(getSession('user'));
 ?>
 
 

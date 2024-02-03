@@ -26,8 +26,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $Posts = dbGet('articles');
-                        $i = 1; ?>
+                        <?php ;
+                        $i = 1;
+                        if(getUseRrole('user')['role']=='admin'):;
+                        $Posts = dbGet('articles')
+                         ?>
                         <?php foreach ($Posts as $post): ?>
                             <tr>
                                 <td>
@@ -61,6 +64,49 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
+<?php else:
+    $Posts=dbRows('articles','user_id',getUseRrole('user')['id']);
+
+   ?>
+    
+                            <?php foreach ($Posts as $post):
+
+                                    ?>
+                            <tr>
+                                <td>
+                                    <?php echo $i++; ?>
+                                </td>
+                                <td>
+                                 <?php echo dbRow('categories','id',$post['category_id'])['name']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $post['title']; ?>
+                                </td>
+                                <td>
+                                <?php echo dbRow('users','id',$post['user_id'])['name']; ?> <!--need user name--! -->
+                                </td>
+                                <td>
+                                    <?php echo $post['status']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $post['created_at']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $post['number_of_views']; ?>
+                                </td>
+                                <td>
+                                    <a href="<?php echo URL . "/Views/Dashboard/Posts/Edit.php?id=" . $post['id']; ?>"
+                                        class="btn btn-info">Show</a>
+                                </td>
+                                <td>
+                                    <a href="<?php echo URL . "/Controllers/Dash/Posts/Delete.php?id=" . $post['id']; ?>"
+                                        class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+    
+
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

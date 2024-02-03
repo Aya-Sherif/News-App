@@ -1,4 +1,19 @@
+<?php
+if(IsDefined('user'))
+{
+  $user_id=getSession('user');
+  $user=dbRow('users','id',$user_id);
+
+}
+else
+{
+  die("User Not Exist");
+
+}
+
+?>
 <!doctype html>
+
 <html lang="en">
 
 <head>
@@ -44,7 +59,7 @@
 </head>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar scroll</a>
+    <a class="navbar-brand" href="<?php echo URL . "/Views/Front/Home.php" ?>">News App </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
       aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -58,31 +73,31 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Categories
+            <?php $categories=dbGet('categories');?>
           </a>
           <ul class="dropdown-menu">
-            <?php $user_id=getInput('id');
-            $user=dbRow('users','id',$user_id);
+            <?php 
             if($user['role']=='admin'):;?>
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Categories/Add.php?id=".$user_id ?>">Add New</a></li>
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Categories/Index.php?id=".$user_id ?>">View All</a>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Categories/Add.php" ?>">Add New</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Categories/Index.php" ?>">View All</a>
             <?php else:?>
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Categories/Index.php?id=".$user_id ?>">View All</a>
+              <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Categories/Index.php" ?>">View All</a></li>
+              <?php foreach($categories as $category):?>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Front/Home.php?id=".$category['id'] ?>"><?php echo $category['name']?></a>
             </li>
+            <?php endforeach ?>
             <?php endif;?>
           </ul>
         </li>
-        <?php  $user_id=getInput('id');
-            $user=dbRow('users','id',$user_id);
+        <?php 
             if($user['role']=='admin'):;?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Users
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Users/Add.php?id=".$user_id ?>">Add User</a></li>
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Users/Index.php?id=".$user_id ?>">View All</a></li>
-
-            
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Users/Add.php" ?>">Add User</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Users/Index.php" ?>">View All</a></li>            
           </ul>
         </li>
         <?php endif;?>
@@ -91,13 +106,15 @@
             Posts
           </a>
           <ul class="dropdown-menu">
-          <?php  $user_id=getInput('id');
-            $user=dbRow('users','id',$user_id);
+          <?php 
             if($user['role']=='admin'):;?>
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php?id=".$user_id ?>">Add Post</a></li>
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=".$user_id ?>">View All</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php" ?>">Add Post</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>">View All</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Front/Home.php" ?>">View All</a></li>
             <?php else:?>
-            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=".$user_id ?>">View All</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php" ?>">Add Post</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>">View Yours</a></li>
+            <li><a class="dropdown-item" href="<?php echo URL . "/Views/Front/Home.php" ?>">View All</a></li>
             <?php endif;?>
           </ul>
 

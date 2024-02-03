@@ -36,8 +36,9 @@ if (CheckPostMethod()) {
         // Now, you can insert the image URL into the database
         $created_at = date("Y-m-d H:i:s");
         $user_id = getSession('user');
-
         // Assuming you have a function like dbinsert to insert data into the database
+        if(getUseRrole('user')['role']=='writer')
+        {
         dbinseret('articles', [
             'title' => $title,
             'id' => null,
@@ -52,7 +53,24 @@ if (CheckPostMethod()) {
         $success = "Post Sending Successfully ❤️";
         setSession('Success', $success);
         Redirect('../../../Views/Dashboard/Posts/Index.php');
+    }
+    else
+    {
+        dbinseret('articles', [
+            'title' => $title,
+            'id' => null,
+            'category_id' => $Category,
+            'user_id' => $user_id,
+            'description' => $content,
+            'image' => $image, // Insert the relative URL here
+            'number_of_views' => 0,
+            'status' => $statue
+                ]);
 
+        $success = "Post Added Successfully ❤️";
+        setSession('Success', $success);
+        Redirect('../../../Views/Dashboard/Posts/Index.php');
+    }
 
 
     } else {

@@ -7,6 +7,5 @@ require_once (MAIN_PATH."/APP/Sessions.php");
 require_once (MAIN_PATH."/APP/DB.php");
 require_once (MAIN_PATH."/APP/Request.php");
 require_once(MAIN_PATH . "/APP/Respons.php");
-
-
+session_start();
 ?>

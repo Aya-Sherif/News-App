@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("../../../APP/Config.php");
 
 
@@ -26,11 +25,10 @@ if (CheckPostMethod()) {
             'username' => $username,
             'password' => sha1($password),
         ];
-        if (handleLogin( $username, $password)) {
+        if (handleLogin($username, $password)) {
             setSession('user', handleLogin($username, $password));
-           var_dump(getSession('user'));
-            $user_id=getSession('user');
-           header('location:../../../Views/Dashboard/Categories/Index.php?id='.$user_id);
+            var_dump(getSession('user'));
+            header('location:../../../Views/Dashboard/Categories/Index.php');
         } else {
             $errors[] = "Invalid User or Password";
             setSession('errors', $errors);

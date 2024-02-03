@@ -1,6 +1,5 @@
 <?php
 require_once("../../../App/Config.php");
-session_start();
 ?>
 <!doctype html>
 <html lang="en">
