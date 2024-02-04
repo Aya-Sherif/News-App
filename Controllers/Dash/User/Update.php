@@ -1,7 +1,8 @@
 <?php
-session_start();
 require_once("../../../APP/config.php");
+
 $row = dbRow("users", "id", getInput('id'));
+var_dump($row);
 
 if (CheckPostMethod()) {
     $errors = [];
@@ -44,7 +45,7 @@ if (CheckPostMethod()) {
 
         $success = "Updated Successfully ❤️";
         setSession('Success', $success);
-    Redirect('../../../Views/Dashboard/Users/Index.php');
+   Redirect('../../../Views/Dashboard/Users/Index.php');
 
     } else {
         setSession('errors', $errors);

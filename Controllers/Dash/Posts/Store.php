@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("../../../App/config.php");
 
 if (CheckPostMethod()) {
@@ -35,9 +34,9 @@ if (CheckPostMethod()) {
 
         // Now, you can insert the image URL into the database
         $created_at = date("Y-m-d H:i:s");
-        $user_id = getSession('user');
+        $user_id = getUser('user')['id'];
         // Assuming you have a function like dbinsert to insert data into the database
-        if(getUseRrole('user')['role']=='writer')
+        if(getUser('user')['role']=='writer')
         {
         dbinseret('articles', [
             'title' => $title,
@@ -52,7 +51,7 @@ if (CheckPostMethod()) {
 
         $success = "Post Sending Successfully ❤️";
         setSession('Success', $success);
-        Redirect('../../../Views/Dashboard/Posts/Index.php');
+        Redirect('../../../Views/Dashboard/Posts/Index.php?');
     }
     else
     {

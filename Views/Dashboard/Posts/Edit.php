@@ -1,9 +1,23 @@
 <?php require_once("../../../App/config.php");
-$article = dbRow("articles", "id", getInput('id'));
-$categories=dbGet('categories');
-if (!$article) {
+if (isGetMethod()) {
+    // Check if 'id' parameter is set in the GET request
+    if (isset($_GET['id'])) {
+        // If set, use getInput('id')
+        $ID = getInput('id');
+    } else {
+        // If not set, default $ID to 0
+        $ID = 0;
+    }
+} else {
+    // For non-GET requests, set $ID to 0 or handle it as needed
     die("Article Not Exist");
+
 }
+
+$article = dbRow("articles", "id", $ID);
+$categories=dbGet('categories');
+$user_role=getUser('user')['role'];
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,6 +67,7 @@ if (!$article) {
     </header>
     <!-- Main Content-->
     <article class="mb-4">
+    <?php if($user_role=='admin'):?>
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -64,13 +79,17 @@ if (!$article) {
                 </div>
             </div>
         </div>
+        <?php endif ?>
     </article>
     
 <div class="container">
     <div class="row">
         <div class="col-8 mx-auto bg-light my-5 border border-dark border-3">
             <form action="<?php echo URL . "/Controllers/Dash/Posts/Update.php?id=".$article['id'] ?>" method="POST">
-                <div class="mb-3">
+                
+            <div class="mb-3">
+            <?php if($user_role=='admin'):?>
+
                     <label for="statue">Statue</label>
                     <select name="statue" id="statue" class="form-control">
                         <option value="accepted">Approve</option>
@@ -86,15 +105,21 @@ if (!$article) {
                         <option value="<?php echo $category['id']?>"selected><?php echo $category['name']?></option>
                 <?php else : ?>
                     <option value="<?php echo $category['id']?>"><?php echo $category['name']?></option>
-
                         <?php endif; ?>
-                
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <?php else:?>
+                <div class="form-group">
+                <label for="content">Post Content:</label>
+                <textarea class="form-control" name="content"><?php echo $article['description']; ?></textarea>
+            </div>
+                <?php endif ?>
+
                 <div class="mb-3">
                     <input type="submit" name="Submit" value="Submit" class="btn btn-success">
                     <a href="<?php echo URL.'/Views/Dashboard/Posts/Index.php'; ?>" class="btn btn-danger">Cancel</a>
+                    <br>
                 </div>
                 
             </form>

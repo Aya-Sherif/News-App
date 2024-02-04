@@ -96,30 +96,44 @@ function dbRow($table, $field, $value)
         if ($data) {
             return $data;
         } else {
-            return [];
+            return null;
         }
     } catch (mysqli_sql_exception $e) {
         die("insert error : " . $e->getMessage());
     }
 }
-function dbRows($table, $field, $value)
+function dbRows($table, $conditions)
 {
     global $conn;
-    $sql = "SELECT * FROM `$table` WHERE `$field`='$value' ";
+
+    // Build the WHERE clause based on the conditions
+    $whereClause = '';
+    foreach ($conditions as $field => $value) {
+        $whereClause .= "`$field`='$value' AND ";
+    }
+
+    // Remove the trailing "AND" from the WHERE clause
+    $whereClause = rtrim($whereClause, ' AND ');
+// var_dump($whereClause);
+    $sql = "SELECT * FROM `$table` WHERE $whereClause";
+
     try {
         $result = mysqli_query($conn, $sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($result)) {
             $data[] = $row;
-        }        if ($data) {
+        }
+
+        if ($data) {
             return $data;
         } else {
             return [];
         }
     } catch (mysqli_sql_exception $e) {
-        die("insert error : " . $e->getMessage());
+        die("select error: " . $e->getMessage());
     }
 }
+
 
 function dbDelete($table, $id)
 {

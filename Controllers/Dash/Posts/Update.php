@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("../../../APP/config.php");
 
 if (CheckPostMethod()) {
@@ -15,11 +14,18 @@ if (CheckPostMethod()) {
     }
     if (empty($errors)) {
         echo $row['id'];
+        $user_role=getSession('user')['role'];
+        if($user_role=='admin')
+        {
         dbUpdate('articles', ['category_id' => $Category, 'status' => $statue], $row['id']);
+        }else
+        {
+            dbUpdate('articles', ['description'=>$content], $row['id']);
 
+        }
         $success = "Updated Successfully ❤️";
         setSession('Success', $success);
-        Redirect('../../../Views/Dashboard/Posts/Index.php');
+        Redirect('../../../Views/Dashboard/Posts/Index.php?');
 
     } else {
         setSession('errors', $errors);

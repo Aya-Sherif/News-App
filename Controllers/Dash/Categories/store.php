@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once("../../../APP/config.php");
 
 if (CheckPostMethod()) {

@@ -2,6 +2,7 @@
 require_once '../../../App/config.php'; 
 ?>
 <?php require_once MAIN_PATH . '/Views/Dashboard/Inc/Header.php';
+$user=getUser('user');
 ?>
 
 
@@ -16,8 +17,12 @@ require_once '../../../App/config.php';
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <?php if($user['role']=='admin'):?>
                             <th>Edit</th>
                             <th>Delete</th>
+                            <?php else:?>
+                            <th>Show</th>
+                            <?php endif?>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,13 +36,25 @@ require_once '../../../App/config.php';
                                 <td>
                                     <?php echo $category['name']; ?>
                                 </td>
+                                <?php if($user['role']=='admin'):?>
                                 <td>
                                     <a href="<?php echo URL . "/Views/Dashboard/Categories/Edit.php?id=" . $category['id']; ?>"
                                         class="btn btn-info">Edit</a>
                                 </td>
                                 <td>
+                                    <?php if($category['id']==0):?>
+                                        <button class="btn btn-danger" disabled>Delete</button>
+
+                                        <?php else:?>
                                     <a href="<?php echo URL . "/Controllers/Dash/Categories/Delete.php?id=" . $category['id']; ?>"
                                         class="btn btn-danger">Delete</a>
+                                
+                                <?php endif?>    </td>
+                                <?php else:?>
+                                    <td>
+                                    <a href="<?php echo URL . "/Views/Front/Home.php?id=" . $category['id']; ?>"
+                                        class="btn btn-info">Show</a>
+                                        <?php endif?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
