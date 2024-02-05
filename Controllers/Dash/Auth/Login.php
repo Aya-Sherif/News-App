@@ -16,7 +16,7 @@ if (CheckPostMethod()) {
     var_dump($user['status']);
     if ($user['status'] == 'inactive') {
 
-$errors[]='You are hold, Contact the admin for more details.';
+        $errors[] = 'You are hold, Contact the admin for more details.';
     }
     if (requiredInput($password)) {
         $errors[] = 'Please write  password';

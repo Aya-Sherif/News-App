@@ -1,31 +1,29 @@
-<?php 
+<?php
 
-$servername="localhost";
-$username="root";
-$password="";
-$dpname="news_app";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dpname = "news_app";
 
-$conn=mysqli_connect($servername,$username,$password,$dpname);
-if(!$conn)
-{
+$conn = mysqli_connect($servername, $username, $password, $dpname);
+if (!$conn) {
     die("connection Faild : " . mysqli_connect_error());
 }
 
 
-function dbinseret($Table,$Data)
+function dbinseret($Table, $Data)
 {
-global $conn;
-$Key=array_keys($Data);
-$Key='`'.implode('`,`',$Key).'`';
-$values=array_values($Data);
-$values="'".implode("','",$values)."'";
-$sql = "INSERT INTO `$Table` ($Key) VALUES ($values);";
-try{
-    mysqli_query($conn, $sql);
-}
-catch (Exception $e) {
-    die("Insert failed: " . $e->getMessage());
-}
+    global $conn;
+    $Key = array_keys($Data);
+    $Key = '`' . implode('`,`', $Key) . '`';
+    $values = array_values($Data);
+    $values = "'" . implode("','", $values) . "'";
+    $sql = "INSERT INTO `$Table` ($Key) VALUES ($values);";
+    try {
+        mysqli_query($conn, $sql);
+    } catch (Exception $e) {
+        die("Insert failed: " . $e->getMessage());
+    }
 
 }
 function is_Defiend($Table, $Data)
@@ -69,7 +67,8 @@ function dbGet($table)
 
 }
 
-function dbUpdate($table, $data, $id){
+function dbUpdate($table, $data, $id)
+{
     global $conn;
     $keys = "";
     foreach ($data as $key => $value) {
@@ -114,7 +113,7 @@ function dbRows($table, $conditions)
 
     // Remove the trailing "AND" from the WHERE clause
     $whereClause = rtrim($whereClause, ' AND ');
-// var_dump($whereClause);
+    // var_dump($whereClause);
     $sql = "SELECT * FROM `$table` WHERE $whereClause";
 
     try {
@@ -146,24 +145,4 @@ function dbDelete($table, $id)
         die("insert error : " . $e->getMessage());
     }
 }
-
-function handleLogin( $username, $password)
-{
-    global $conn;
-        $sql = "SELECT `username`,`password`,`role`,`id`
-FROM `users` 
-WHERE `username`='$username' ";
-        $result = mysqli_query($conn, $sql);
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            if (password_verify($password, $row['password'])) {
-                return $row['id'];
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-
-    }
 

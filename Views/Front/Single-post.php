@@ -1,13 +1,12 @@
 <?php require_once("../../App/config.php");
 $article = dbRow("articles", "id", getInput('id'));
-setSession('post',$article);
+setSession('post', $article);
 require_once("../../Controllers/Front/Single-post.php");
-$categories=dbGet('categories');
-$user_role=getUser('user')['role'];
+$categories = dbGet('categories');
 if (!$article) {
     die("Article Not Exist");
 }
- ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,4 +67,3 @@ if (!$article) {
             </div>
         </div>
     </article>
-    

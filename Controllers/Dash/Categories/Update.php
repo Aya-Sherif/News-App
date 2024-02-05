@@ -21,11 +21,11 @@ if (CheckPostMethod()) {
     }
 
     if (empty($errors)) {
-        dbUpdate('categories', ['name' => $name],$row['id']);
+        dbUpdate('categories', ['name' => $name], $row['id']);
 
         $success = "Updated Successfully ❤️";
         setSession('Success', $success);
-            Redirect('../../../Views/Dashboard/Categories/Index.php');
+        Redirect('../../../Views/Dashboard/Categories/Index.php');
 
     } else {
         setSession('errors', $errors);

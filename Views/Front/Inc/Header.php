@@ -1,4 +1,7 @@
 <?php $user = getUser('user'); ?>
+<?php $categories = dbGet('categories');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,22 +39,37 @@
                     <?php if (!$user): ?>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                 href="<?php echo URL . "views/front/home.php"; ?>">Home</a></li>
+                        <li class="nav-item dropdown d-flex">
+                            <a class="nav-link dropdown-toggle px-lg-3 py-3 py-lg-4" href="<?php echo URL . "/Views/Front/Home.php?id=0"; ?>"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categories
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php foreach ($categories as $category): ?>
+                                    <li><a class="dropdown-item"
+                                            href="<?php echo URL . "/Views/Front/Home.php?id=" . $category['id']; ?>">
+                                            <?php echo $category['name']; ?>
+                                        </a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                 href="<?php echo URL . "views/front/about.php"; ?>">About</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                                 href="<?php echo URL . "views/front/contact.php"; ?>">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                                href="<?php echo URL . "/Views/Dashboard/Auth/Login.php"; ?>">Login</a></li>
+
                     <?php else: ?>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page"
                                 href="<?php echo URL . "/Views/Dashboard/Categories/Index.php" ?>">Home</a>
                         </li>
-                        <?php if ($user['role'] == 'admin'):
-                            ; ?>
+                        <?php if ($user['role'] == 'admin'): ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Categories
-                                    <?php $categories = dbGet('categories'); ?>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item"
@@ -59,17 +77,16 @@
                                     </li>
                                     <li><a class="dropdown-item"
                                             href="<?php echo URL . "/Views/Dashboard/Categories/Index.php" ?>">View All</a>
+                                    </li>
                                 </ul>
-
-                            <?php else: ?>
+                            </li>
+                        <?php else: ?>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page"
                                     href="<?php echo URL . "/Views/Dashboard/Categories/Index.php" ?>">Categories</a>
                             </li>
                         <?php endif; ?>
-                        </li>
-                        <?php if ($user['role'] == 'admin'):
-                            ; ?>
+                        <?php if ($user['role'] == 'admin'): ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -84,33 +101,31 @@
                             </li>
                         <?php endif; ?>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown-toggle"
+                                href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Posts
                             </a>
                             <ul class="dropdown-menu">
-                                <?php
-                                if ($user['role'] == 'admin'):
-                                    ; ?>
+                                <?php if ($user['role'] == 'admin'): ?>
                                     <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php" ?>">Add
-                                            Post</a></li>
+                                            Post</a>
+                                    </li>
                                     <li><a class="dropdown-item"
                                             href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>">View All</a></li>
                                 <?php else: ?>
                                     <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php" ?>">Add
-                                            Post</a></li>
+                                            Post</a>
+                                    </li>
                                     <li><a class="dropdown-item"
                                             href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=0" ?>">View
                                             Yours</a></li>
                                     <li><a class="dropdown-item"
                                             href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=1" ?>">View All</a>
                                     </li>
-                                <!-- <?php endif; ?> -->
+                                <?php endif; ?>
                             </ul>
-
                         </li>
-
-
                     <?php endif ?>
                 </ul>
             </div>

@@ -22,7 +22,7 @@ if (CheckPostMethod()) {
     }
     if (empty($errors)) {
         dbinseret('categories', ['name' => $name, 'id' => null]);
-        
+
         $success = "Added Successfully ❤️";
         setSession('Success', $success);
         Redirect('../../../Views/Dashboard/Categories/Index.php');

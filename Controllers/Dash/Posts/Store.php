@@ -36,40 +36,37 @@ if (CheckPostMethod()) {
         $created_at = date("Y-m-d H:i:s");
         $user_id = getUser('user')['id'];
         // Assuming you have a function like dbinsert to insert data into the database
-        if(getUser('user')['role']=='writer')
-        {
-        dbinseret('articles', [
-            'title' => $title,
-            'id' => null,
-            'category_id' => 0,
-            'user_id' => $user_id,
-            'description' => $content,
-            'image' => $image, // Insert the relative URL here
-            'number_of_views' => 0,
-            'status' => 'pending'
-        ]);
+        if (getUser('user')['role'] == 'writer') {
+            dbinseret('articles', [
+                'title' => $title,
+                'id' => null,
+                'category_id' => 0,
+                'user_id' => $user_id,
+                'description' => $content,
+                'image' => $image, // Insert the relative URL here
+                'number_of_views' => 0,
+                'status' => 'pending'
+            ]);
 
-        $success = "Post Sending Successfully ❤️";
-        setSession('Success', $success);
-        Redirect('../../../Views/Dashboard/Posts/Index.php?');
-    }
-    else
-    {
-        dbinseret('articles', [
-            'title' => $title,
-            'id' => null,
-            'category_id' => $Category,
-            'user_id' => $user_id,
-            'description' => $content,
-            'image' => $image, // Insert the relative URL here
-            'number_of_views' => 0,
-            'status' => $statue
-                ]);
+            $success = "Post Sending Successfully ❤️";
+            setSession('Success', $success);
+            Redirect('../../../Views/Dashboard/Posts/Index.php?');
+        } else {
+            dbinseret('articles', [
+                'title' => $title,
+                'id' => null,
+                'category_id' => $Category,
+                'user_id' => $user_id,
+                'description' => $content,
+                'image' => $image, // Insert the relative URL here
+                'number_of_views' => 0,
+                'status' => $statue
+            ]);
 
-        $success = "Post Added Successfully ❤️";
-        setSession('Success', $success);
-        Redirect('../../../Views/Dashboard/Posts/Index.php');
-    }
+            $success = "Post Added Successfully ❤️";
+            setSession('Success', $success);
+            Redirect('../../../Views/Dashboard/Posts/Index.php');
+        }
 
 
     } else {

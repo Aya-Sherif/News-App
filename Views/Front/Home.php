@@ -1,9 +1,20 @@
 <?php require_once("../../App/config.php") ?>
 <?php require_once("Inc/Header.php"); {
-    $category_id = getInput('id');
+    if (isGetMethod() || IsDefined('user')) {
+        // Check if 'id' parameter is set in the GET request
+        if (isset($_GET['id'])) {
+            // If set, use getInput('id')
+            $category_id = getInput('id');
+        } else {
+            // If not set, default $ID to 0
+            $category_id = 0;
+        }
+    } else {
+        //if the user is not admin or writer 
+        $category_id = 0;
+    }
     $articles = dbRows('articles', ['category_id' => $category_id, 'status' => 'accepted']);
 }
-
 ?>
 <!-- Page Header-->
 <header class="masthead" style="background-image: url('<?php echo URL . "Public/" ?>assets/img/home-bg.jpg')">
@@ -22,12 +33,11 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-
             <?php if ($articles && $category_id != 0): ?>
                 <?php foreach ($articles as $article): ?>
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
+                        <a href="<?php echo URL . "/Views/Front/Single-post.php?id=" . $article['id']; ?>">
                             <h1 class="post-title">
                                 <?php echo $article['title'];
                                 ?>
@@ -41,7 +51,6 @@
                             </a>
                             on
                             <?php echo $article['created_at'] ?>
-
                         </p>
                     </div>
                     <!-- Divider-->
@@ -53,7 +62,7 @@
                 <?php foreach ($articles as $article): ?>
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
+                        <a href="<?php echo URL . "/Views/Front/Single-post.php?id=" . $article['id']; ?>">
                             <h1 class="post-title">
                                 <?php echo $article['title'];
                                 ?>
@@ -67,13 +76,11 @@
                             </a>
                             on
                             <?php echo $article['created_at'] ?>
-
                         </p>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
                 <?php endforeach; ?>
-
             <?php else: ?>
                 <div>
                     <p>Oops! :( <br>

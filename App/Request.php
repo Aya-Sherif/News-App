@@ -30,7 +30,7 @@ function getInput($name)
 function getUser($key)
 {
     if (IsDefined($key)) {
-        $user= getSession($key);
+        $user = getSession($key);
         return $user;
     } else {
         return [];

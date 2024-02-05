@@ -89,33 +89,46 @@ $user = getUser('user');
           </li>
         <?php endif; ?>
         <li class="nav-item dropdown">
-            <?php
-            if ($user['role'] == 'admin'):
-              ; ?>
-          <a class="nav-link dropdown-toggle" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Posts
-          </a>
-          <ul class="dropdown-menu">
+          <?php
+          if ($user['role'] == 'admin'):
+            ; ?>
+            <a class="nav-link dropdown-toggle" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>"
+              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Posts
+            </a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php" ?>">Add Post</a></li>
               <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php" ?>">View All</a></li>
             <?php else: ?>
-              <a class="nav-link dropdown-toggle" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=0" ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Posts
-          </a>
-          <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php" ?>">Add Post</a></li>
-              <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=0" ?>">View Yours</a></li>
-              <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=1" ?>">View All</a>
-              </li>
-            <?php endif; ?>
-          </ul>
+              <a class="nav-link dropdown-toggle" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=0" ?>"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Posts
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Add.php" ?>">Add Post</a></li>
+                <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=0" ?>">View
+                    Yours</a></li>
+                <li><a class="dropdown-item" href="<?php echo URL . "/Views/Dashboard/Posts/Index.php?id=1" ?>">View
+                    All</a>
+                </li>
+              <?php endif; ?>
+            </ul>
 
         </li>
       </ul>
       <form class="d-flex" role="search">
+
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
+        <?php if (IsDefined('user')): ?>
+          <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="<?php echo URL . "/Controllers/Dash/Auth/Logout.php" ?>">Logout</a>
+            </li>
+          </ul>
+        <?php endif ?>
       </form>
+
     </div>
   </div>
 </nav>

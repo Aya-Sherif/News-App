@@ -29,10 +29,9 @@ if (CheckPostMethod()) {
         $errors[] = "Where is the password ? 🙄";
     } elseif (!password_hash($password, PASSWORD_DEFAULT) == $row['password']) {
         if (MineInput($password, 6) || MaxInput($password, 30)) {
-            $errors[] = "The password didn't met the required lenght, Enter a valid one 😊";        
-        }
-        else{
-            $password=password_hash($password, PASSWORD_DEFAULT);
+            $errors[] = "The password didn't met the required lenght, Enter a valid one 😊";
+        } else {
+            $password = password_hash($password, PASSWORD_DEFAULT);
         }
 
     }
@@ -41,11 +40,11 @@ if (CheckPostMethod()) {
     }
 
     if (empty($errors)) {
-        dbUpdate('users', ['name' => $name, 'username' => $username, 'role' => $role, 'status'=>$status,'password' => $password], $row['id']);
+        dbUpdate('users', ['name' => $name, 'username' => $username, 'role' => $role, 'status' => $status, 'password' => $password], $row['id']);
 
         $success = "Updated Successfully ❤️";
         setSession('Success', $success);
-   Redirect('../../../Views/Dashboard/Users/Index.php');
+        Redirect('../../../Views/Dashboard/Users/Index.php');
 
     } else {
         setSession('errors', $errors);

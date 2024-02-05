@@ -10,7 +10,7 @@ function requiredInput($value)
 }
 
 //max and mine function used to check if the the input within a specific range or not 
-function MineInput($value,$length)
+function MineInput($value, $length)
 {
     if (!requiredInput($value)) {
         if (strlen($value) < $length) {
@@ -33,15 +33,15 @@ function MaxInput($value, $length)
 }
 function santInput($value)
 {
-    $str=trim($value);
-    $str= filter_var($str,FILTER_SANITIZE_STRING);
-    return$str;
+    $str = trim($value);
+    $str = filter_var($str, FILTER_SANITIZE_STRING);
+    return $str;
 }
 function santEmail($email)
 {
-    $str=trim($email    );
-    $str= filter_var($str,FILTER_SANITIZE_EMAIL);
-    return$str;
+    $str = trim($email);
+    $str = filter_var($str, FILTER_SANITIZE_EMAIL);
+    return $str;
 }
 //this function is used to check if the user enter a valid email or not 
 function EmailValidation($email)
